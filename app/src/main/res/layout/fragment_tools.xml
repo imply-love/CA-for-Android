@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!-- 搜索框 -->
+    <EditText
+        android:id="@+id/et_search"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:hint="搜索工具…"
+        android:drawableStart="@android:drawable/ic_menu_search"
+        android:drawablePadding="8dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:layout_margin="12dp"
+        android:background="@drawable/bg_card_acrylic"
+        android:inputType="text"
+        android:maxLines="1"
+        android:textSize="15sp" />
+
+    <!-- 空状态提示 -->
+    <TextView
+        android:id="@+id/tv_empty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="暂无可用工具"
+        android:textSize="16sp"
+        android:textColor="#999999"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        android:layout_marginTop="120dp" />
+
+    <!-- 工具列表 -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_tools"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="8dp" />
+
+</LinearLayout>

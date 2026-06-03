@@ -8,7 +8,6 @@ pluginManagement {
             }
         }
         mavenCentral()
-        gradlePluginPortal()
     }
 }
 dependencyResolutionManagement {
@@ -18,6 +17,7 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
+
 
 rootProject.name = "CA for Android"
 include ':app'

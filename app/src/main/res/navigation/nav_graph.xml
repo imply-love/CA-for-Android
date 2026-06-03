@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/navigation_announce">
+
+    <fragment
+        android:id="@+id/navigation_announce"
+        android:name="com.forum.cy.AnnounceFragment"
+        android:label="公告" />
+
+    <fragment
+        android:id="@+id/navigation_dynamic"
+        android:name="com.forum.cy.DynamicFragment"
+        android:label="动态" />
+
+    <fragment
+        android:id="@+id/navigation_tools"
+        android:name="com.forum.cy.ToolsFragment"
+        android:label="工具" />
+
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="com.forum.cy.ProfileFragment"
+        android:label="我的" />
+
+</navigation>

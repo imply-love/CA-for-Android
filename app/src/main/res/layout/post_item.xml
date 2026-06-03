@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="5dp"
+    android:background="@drawable/bg_card_acrylic"
+    android:padding="16dp">
+
+    <!-- 标题 -->
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="#FF222222"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/tv_time"
+        app:layout_constraintHorizontal_bias="0" />
+
+    <!-- 时间戳 -->
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:textColor="@android:color/darker_gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_title"
+        app:layout_constraintBottom_toBottomOf="@id/tv_title" />
+
+    <!-- 摘要 -->
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:textColor="#FF555555"
+        android:layout_marginTop="6dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_title"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- 底部栏：回复计数（左） + 回复按钮（右） -->
+    <TextView
+        android:id="@+id/tv_reply_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:textColor="#FF999999"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_content" />
+
+    <TextView
+        android:id="@+id/btn_reply"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="回复"
+        android:textSize="13sp"
+        android:textColor="#FFFFFFFF"
+        android:background="@drawable/bg_glass_button"
+        android:backgroundTint="@color/accent_purple"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_reply_count"
+        app:layout_constraintBottom_toBottomOf="@id/tv_reply_count" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
