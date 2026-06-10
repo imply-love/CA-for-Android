@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <EditText
+        android:id="@+id/et_edit_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="标题"
+        android:inputType="text"
+        android:maxLines="1"
+        android:textSize="16sp"
+        android:background="@drawable/bg_glass_button"
+        android:padding="12dp" />
+
+    <EditText
+        android:id="@+id/et_edit_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="内容"
+        android:inputType="textMultiLine"
+        android:minLines="4"
+        android:gravity="top"
+        android:textSize="15sp"
+        android:background="@drawable/bg_glass_button"
+        android:padding="12dp"
+        android:layout_marginTop="12dp" />
+
+</LinearLayout>

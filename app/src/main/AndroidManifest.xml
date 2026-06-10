@@ -25,6 +25,8 @@
         <activity android:name=".PostDetailActivity"
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".LoginActivity" />
+        <activity android:name=".FavoritesActivity" />
+        <activity android:name=".NotificationsActivity" />
     </application>
 
 </manifest>

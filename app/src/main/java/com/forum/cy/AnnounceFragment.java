@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -15,9 +16,7 @@ import com.forum.cy.data.DatabaseHelper;
 import com.forum.cy.model.Post;
 import com.forum.cy.util.AuthManager;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 公告列表 Fragment（type = 0）。
@@ -40,6 +39,22 @@ public class AnnounceFragment extends Fragment {
         adapter = new PostAdapter(new ArrayList<>(), post -> openDetail(post.id, false));
         adapter.setOnReplyClickListener(post -> openDetail(post.id, true));
         recyclerView.setAdapter(adapter);
+
+        // 绑定 FAB 发布按钮
+        View fabPublish = view.findViewById(R.id.fab_publish);
+        if (fabPublish != null) {
+            fabPublish.setOnClickListener(v -> {
+                if (!authManager.isLoggedIn()) {
+                    startActivity(new Intent(getContext(), LoginActivity.class));
+                    return;
+                }
+                PublishPostDialog dialog = new PublishPostDialog(0);
+                dialog.show(getParentFragmentManager(), "publish_announce");
+            });
+            // FAB 缩放进入动画
+            fabPublish.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.fab_scale_in));
+        }
+
         loadPosts();
         return view;
     }
@@ -63,9 +78,6 @@ public class AnnounceFragment extends Fragment {
 
     private void loadPosts() {
         List<Post> posts = dbHelper.getPostsByType(0);
-        Map<Long, Integer> countMap = new HashMap<>();
-        for (Post p : posts) countMap.put(p.id, dbHelper.getReplyCount(p.id));
-        adapter.setReplyCountMap(countMap);
         adapter.updateData(posts);
     }
 }

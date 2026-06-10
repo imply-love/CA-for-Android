@@ -45,6 +45,57 @@
         android:layout_height="0dp"
         android:layout_weight="1" />
 
+    <!-- 我的收藏按钮（已登录时显示） -->
+    <Button
+        android:id="@+id/btn_favorites"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:text="⭐ 我的收藏"
+        android:textSize="16sp"
+        android:textColor="@color/text_primary"
+        android:backgroundTint="@color/card_bg"
+        android:layout_marginBottom="12dp"
+        android:elevation="4dp"
+        android:visibility="gone" />
+
+    <!-- 消息通知按钮（已登录时显示） -->
+    <Button
+        android:id="@+id/btn_notifications"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:text="🔔 消息通知"
+        android:textSize="16sp"
+        android:textColor="@color/text_primary"
+        android:backgroundTint="@color/card_bg"
+        android:layout_marginBottom="12dp"
+        android:elevation="4dp"
+        android:visibility="gone" />
+
+    <!-- 夜间模式切换 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@drawable/bg_card_acrylic"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:layout_marginBottom="12dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="🌙 夜间模式"
+            android:textSize="16sp"
+            android:textColor="@color/text_primary" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/switch_dark_mode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
     <!-- 退出登录按钮（已登录时显示） -->
     <Button
         android:id="@+id/btn_logout"

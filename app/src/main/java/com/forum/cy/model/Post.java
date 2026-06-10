@@ -12,6 +12,8 @@ public class Post {
     public long time; // 时间戳（ms）
     public String author;
     public boolean anonymous; // 是否匿名发表，仅对动态页有效
+    public int replyCount; // 回复计数（由数据库维护）
+    public String imagePath; // 帖子附图本地路径
 
     public Post() {}
 

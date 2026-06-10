@@ -18,9 +18,23 @@ import java.util.Locale;
  */
 public class ReplyAdapter extends RecyclerView.Adapter<ReplyAdapter.ReplyViewHolder> {
     private List<Reply> replies;
+    private String currentUsername;
+    private OnDeleteClickListener onDeleteClickListener;
+
+    public interface OnDeleteClickListener {
+        void onDeleteClick(Reply reply, int position);
+    }
 
     public ReplyAdapter(List<Reply> replies) {
         this.replies = replies;
+    }
+
+    public void setCurrentUsername(String username) {
+        this.currentUsername = username;
+    }
+
+    public void setOnDeleteClickListener(OnDeleteClickListener listener) {
+        this.onDeleteClickListener = listener;
     }
 
     public void updateData(List<Reply> newReplies) {
@@ -43,6 +57,16 @@ public class ReplyAdapter extends RecyclerView.Adapter<ReplyAdapter.ReplyViewHol
         holder.content.setText(reply.content);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
         holder.time.setText(sdf.format(new Date(reply.time)));
+
+        // 判断是否显示删除按钮：当前用户是回复作者
+        boolean isOwner = currentUsername != null && currentUsername.equals(reply.author);
+        holder.btnDelete.setVisibility(isOwner ? View.VISIBLE : View.GONE);
+
+        holder.btnDelete.setOnClickListener(v -> {
+            if (onDeleteClickListener != null) {
+                onDeleteClickListener.onDeleteClick(reply, position);
+            }
+        });
     }
 
     @Override
@@ -51,12 +75,13 @@ public class ReplyAdapter extends RecyclerView.Adapter<ReplyAdapter.ReplyViewHol
     }
 
     static class ReplyViewHolder extends RecyclerView.ViewHolder {
-        TextView author, content, time;
+        TextView author, content, time, btnDelete;
         public ReplyViewHolder(@NonNull View itemView) {
             super(itemView);
             author = itemView.findViewById(R.id.tv_reply_author);
             content = itemView.findViewById(R.id.tv_reply_content);
             time = itemView.findViewById(R.id.tv_reply_time);
+            btnDelete = itemView.findViewById(R.id.btn_delete_reply);
         }
     }
 }

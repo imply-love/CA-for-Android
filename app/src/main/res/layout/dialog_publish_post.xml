@@ -1,69 +1,187 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="24dp">
+    android:background="@color/overlay_dark">
 
-    <!-- 半透明遮罩背景（原生实现，替代 BlurView） -->
-    <View
-        android:id="@+id/blurView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#80000000" />
-
-    <EditText
-        android:id="@+id/et_title"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="标题"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <EditText
-        android:id="@+id/et_content"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:hint="内容"
-        android:gravity="top"
-        android:inputType="textMultiLine"
-        app:layout_constraintTop_toBottomOf="@id/et_title"
-        app:layout_constraintBottom_toTopOf="@id/sw_anonymous"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <!-- 匿名开关，仅在动态页显示 -->
-    <Switch
-        android:id="@+id/sw_anonymous"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="匿名发布"
-        app:layout_constraintTop_toBottomOf="@id/et_content"
-        app:layout_constraintStart_toStartOf="parent" />
-
+    <!-- 毛玻璃卡片容器 -->
     <LinearLayout
-        android:id="@+id/button_container"
+        android:id="@+id/card_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/sw_anonymous"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        android:layout_gravity="center"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/bg_dialog_acrylic"
+        android:elevation="16dp"
+        android:orientation="vertical"
+        android:paddingStart="22dp"
+        android:paddingEnd="22dp"
+        android:paddingTop="26dp"
+        android:paddingBottom="22dp">
 
-        <Button
-            android:id="@+id/btn_publish"
-            android:layout_width="0dp"
+        <!-- 标题区域 -->
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="发布" />
+            android:text="发布帖子"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/text_primary" />
 
-        <Button
-            android:id="@+id/btn_cancel"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/glass_border"
+            android:layout_marginTop="14dp"
+            android:layout_marginBottom="18dp" />
+
+        <!-- 标题输入 -->
+        <EditText
+            android:id="@+id/et_title"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="输入标题…"
+            android:inputType="text"
+            android:maxLines="1"
+            android:textSize="15sp"
+            android:textColor="@color/text_primary"
+            android:textColorHint="@color/text_secondary"
+            android:background="@drawable/bg_dialog_input"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp" />
+
+        <!-- 内容输入 -->
+        <EditText
+            android:id="@+id/et_content"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="取消" />
+            android:minHeight="120dp"
+            android:hint="分享你的想法…"
+            android:inputType="textMultiLine"
+            android:gravity="top|start"
+            android:textSize="15sp"
+            android:textColor="@color/text_primary"
+            android:textColorHint="@color/text_secondary"
+            android:background="@drawable/bg_dialog_input"
+            android:padding="16dp"
+            android:layout_marginTop="12dp" />
+
+        <!-- 匿名开关（仅动态页显示） -->
+        <LinearLayout
+            android:id="@+id/anonymous_row"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="14dp"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="匿名发布"
+                android:textSize="14sp"
+                android:textColor="@color/text_primary" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/sw_anonymous"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <!-- 图片选择区域 -->
+        <LinearLayout
+            android:id="@+id/image_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="12dp">
+
+            <TextView
+                android:id="@+id/btn_select_image"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:text="📷 添加图片"
+                android:textSize="13sp"
+                android:textColor="@color/accent_blue_purple"
+                android:background="@drawable/bg_dialog_input"
+                android:gravity="center"
+                android:paddingStart="14dp"
+                android:paddingEnd="14dp" />
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp">
+
+                <ImageView
+                    android:id="@+id/iv_preview"
+                    android:layout_width="72dp"
+                    android:layout_height="72dp"
+                    android:scaleType="centerCrop"
+                    android:background="@drawable/bg_image_preview"
+                    android:visibility="gone" />
+
+                <!-- 移除图片按钮 -->
+                <TextView
+                    android:id="@+id/btn_remove_image"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_gravity="top|end"
+                    android:layout_marginTop="-4dp"
+                    android:layout_marginEnd="-4dp"
+                    android:text="✕"
+                    android:textSize="11sp"
+                    android:textColor="#FFFFFFFF"
+                    android:backgroundTint="#CCFF4444"
+                    android:gravity="center"
+                    android:visibility="gone" />
+            </FrameLayout>
+        </LinearLayout>
+
+        <!-- 操作按钮栏 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp"
+            android:gravity="center_vertical">
+
+            <!-- 取消按钮 -->
+            <TextView
+                android:id="@+id/btn_cancel"
+                android:layout_width="0dp"
+                android:layout_height="46dp"
+                android:layout_weight="1"
+                android:text="取消"
+                android:textSize="15sp"
+                android:textColor="@color/text_secondary"
+                android:background="@drawable/bg_dialog_input"
+                android:gravity="center" />
+
+            <View
+                android:layout_width="12dp"
+                android:layout_height="0dp" />
+
+            <!-- 发布按钮（渐变） -->
+            <TextView
+                android:id="@+id/btn_publish"
+                android:layout_width="0dp"
+                android:layout_height="46dp"
+                android:layout_weight="1.3"
+                android:text="发 布"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#FFFFFFFF"
+                android:background="@drawable/bg_btn_publish_gradient"
+                android:gravity="center"
+                android:elevation="4dp" />
+        </LinearLayout>
+
     </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

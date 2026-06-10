@@ -29,4 +29,8 @@
     <color name="btn_logout_bg">#FFE53935</color>
     <color name="fab_gradient_start">#FF7B68EE</color>
     <color name="fab_gradient_end">#FFB06AB3</color>
+
+    <!-- 文字颜色 -->
+    <color name="text_primary">#FF222222</color>
+    <color name="text_secondary">#99999999</color>
 </resources>

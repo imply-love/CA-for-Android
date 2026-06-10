@@ -16,4 +16,10 @@
         <item name="android:windowFullscreen">false</item>
         <item name="android:windowTranslucentStatus">true</item>
     </style>
+
+    <!-- 弹窗滑入动画 -->
+    <style name="DialogSlideAnim" parent="@android:style/Animation.Dialog">
+        <item name="android:windowEnterAnimation">@anim/slide_up</item>
+        <item name="android:windowExitAnimation">@anim/slide_down</item>
+    </style>
 </resources>

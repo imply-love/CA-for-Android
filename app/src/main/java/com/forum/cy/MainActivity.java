@@ -1,7 +1,9 @@
 package com.forum.cy;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
@@ -17,6 +19,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // 应用夜间模式偏好
+        SharedPreferences themePrefs = getSharedPreferences("theme_prefs", MODE_PRIVATE);
+        boolean isDark = themePrefs.getBoolean("dark_mode", false);
+        AppCompatDelegate.setDefaultNightMode(
+                isDark ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO);
+
         setContentView(R.layout.activity_main);
 
         // 通过 supportFragmentManager 获取 NavHostFragment（FragmentContainerView 需要此方式）

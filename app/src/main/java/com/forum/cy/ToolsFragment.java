@@ -19,9 +19,7 @@ import com.forum.cy.data.DatabaseHelper;
 import com.forum.cy.model.Post;
 import com.forum.cy.util.AuthManager;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 工具页（type = 2），支持实时搜索工具。
@@ -84,9 +82,6 @@ public class ToolsFragment extends Fragment {
     }
 
     private void showResults(List<Post> posts) {
-        Map<Long, Integer> countMap = new HashMap<>();
-        for (Post p : posts) countMap.put(p.id, dbHelper.getReplyCount(p.id));
-        adapter.setReplyCountMap(countMap);
         adapter.updateData(posts);
         if (posts.isEmpty()) {
             recyclerView.setVisibility(View.GONE);

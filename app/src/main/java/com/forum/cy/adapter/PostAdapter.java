@@ -1,19 +1,21 @@
 package com.forum.cy.adapter;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.forum.cy.R;
 import com.forum.cy.model.Post;
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 /**
  * 帖子列表适配器。回复按钮点击跳转详情页并自动打开回复框。
@@ -22,7 +24,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     private List<Post> posts;
     private OnItemClickListener listener;
     private OnReplyClickListener replyListener;
-    private Map<Long, Integer> replyCountMap = new HashMap<>();
 
     public interface OnItemClickListener {
         void onItemClick(Post post);
@@ -40,10 +41,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
     public void setOnReplyClickListener(OnReplyClickListener replyListener) {
         this.replyListener = replyListener;
-    }
-
-    public void setReplyCountMap(Map<Long, Integer> replyCountMap) {
-        this.replyCountMap = replyCountMap;
     }
 
     public void updateData(List<Post> newPosts) {
@@ -66,10 +63,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         holder.content.setText(post.content);
         holder.time.setText(formatTime(post.time));
 
-        // 回复计数
-        Integer count = replyCountMap.get(post.id);
-        if (count != null && count > 0) {
-            holder.replyCount.setText(count + " 条回复");
+        // 回复计数（直接使用 post 对象中的 replyCount，无需额外查询）
+        if (post.replyCount > 0) {
+            holder.replyCount.setText(post.replyCount + " 条回复");
             holder.replyCount.setVisibility(View.VISIBLE);
         } else {
             holder.replyCount.setVisibility(View.GONE);
@@ -84,6 +80,24 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         holder.btnReply.setOnClickListener(v -> {
             if (replyListener != null) replyListener.onReplyClick(post);
         });
+
+        // 帖子缩略图
+        if (post.imagePath != null && !post.imagePath.isEmpty()) {
+            File imgFile = new File(post.imagePath);
+            if (imgFile.exists()) {
+                Bitmap bitmap = BitmapFactory.decodeFile(post.imagePath);
+                if (bitmap != null) {
+                    holder.thumbnail.setImageBitmap(bitmap);
+                    holder.thumbnail.setVisibility(View.VISIBLE);
+                } else {
+                    holder.thumbnail.setVisibility(View.GONE);
+                }
+            } else {
+                holder.thumbnail.setVisibility(View.GONE);
+            }
+        } else {
+            holder.thumbnail.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -93,6 +107,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
     static class PostViewHolder extends RecyclerView.ViewHolder {
         TextView title, content, time, btnReply, replyCount;
+        ImageView thumbnail;
         public PostViewHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.tv_title);
@@ -100,6 +115,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             time = itemView.findViewById(R.id.tv_time);
             btnReply = itemView.findViewById(R.id.btn_reply);
             replyCount = itemView.findViewById(R.id.tv_reply_count);
+            thumbnail = itemView.findViewById(R.id.iv_thumbnail);
         }
     }
 

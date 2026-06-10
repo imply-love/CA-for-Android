@@ -5,90 +5,14 @@
     android:background="@drawable/bg_gradient_purple_pink"
     android:orientation="vertical">
 
-    <!-- 可滚动内容区（帖子内容 + 回复列表） -->
-    <ScrollView
+    <!-- 帖子信息 + 回复列表（统一 RecyclerView，头部为帖子信息，后续为回复条目） -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_detail"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:fillViewport="true">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <!-- 帖子信息卡片 -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_card_acrylic"
-                android:orientation="vertical"
-                android:layout_margin="12dp"
-                android:padding="16dp">
-
-                <TextView
-                    android:id="@+id/tv_detail_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:textColor="#FF222222" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="8dp">
-
-                    <TextView
-                        android:id="@+id/tv_detail_author"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:textSize="14sp"
-                        android:textColor="@android:color/darker_gray" />
-
-                    <TextView
-                        android:id="@+id/tv_detail_time"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="14sp"
-                        android:textColor="@android:color/darker_gray" />
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/tv_detail_content"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    android:textColor="#FF333333"
-                    android:paddingTop="12dp" />
-            </LinearLayout>
-
-            <!-- 回复区标题 -->
-            <TextView
-                android:id="@+id/tv_reply_header"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="回复"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:textColor="#FF333333"
-                android:paddingStart="16dp"
-                android:paddingTop="8dp"
-                android:paddingBottom="4dp" />
-
-            <!-- 回复列表（嵌套在 ScrollView 中用 RecyclerView 需固定高度，这里用 LinearLayout 动态添加） -->
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_replies"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:nestedScrollingEnabled="false"
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp" />
-
-        </LinearLayout>
-    </ScrollView>
+        android:clipToPadding="false"
+        android:paddingBottom="8dp" />
 
     <!-- 底部回复输入栏（固定在底部，键盘弹出时在其上方） -->
     <LinearLayout

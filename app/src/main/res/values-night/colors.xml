@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 夜间模式配色方案 -->
+
+    <!-- 深色渐变背景 -->
+    <color name="purple_pink_start">#FF1A1025</color>   <!-- 深紫 -->
+    <color name="purple_pink_end">#FF251520</color>      <!-- 深粉紫 -->
+    <color name="purple_pink_mid">#FF1E1322</color>      <!-- 中间过渡 -->
+
+    <!-- 主题强调色（保持鲜明） -->
+    <color name="accent_purple">#FFB088E0</color>        <!-- 浅紫强调 -->
+    <color name="accent_pink">#FFD478B0</color>          <!-- 浅粉强调 -->
+    <color name="accent_blue_purple">#FF9B8AF0</color>   <!-- 浅蓝紫 -->
+
+    <!-- 导航栏 -->
+    <color name="bottom_nav_selected">#FFB088E0</color>
+    <color name="bottom_nav_unselected">#88888888</color>
+    <color name="nav_bg">#33000000</color>               <!-- 半透明黑 -->
+
+    <!-- 卡片与遮罩 -->
+    <color name="card_bg">#44FFFFFF</color>              <!-- 更透明的白 -->
+    <color name="overlay_dark">#60000000</color>
+    <color name="glass_bg">#30FFFFFF</color>             <!-- 暗色磨砂 -->
+    <color name="glass_border">#22FFFFFF</color>
+
+    <!-- 按钮 -->
+    <color name="btn_logout_bg">#FFE53935</color>
+
+    <!-- 文字颜色适配 -->
+    <color name="text_primary">#FFE0E0E0</color>
+    <color name="text_secondary">#AAFFFFFF</color>
+</resources>

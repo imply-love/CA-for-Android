@@ -1,7 +1,25 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
     <style name="Base.Theme.CAForAndroid" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <item name="colorPrimary">@color/accent_purple</item>
+        <item name="colorPrimaryContainer">@color/purple_pink_start</item>
+        <item name="colorSecondary">@color/accent_pink</item>
+        <item name="android:windowBackground">@color/purple_pink_start</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
+
+    <style name="Theme.CAForAndroid" parent="Base.Theme.CAForAndroid" />
+
+    <!-- 全屏登录/注册页主题 -->
+    <style name="Theme.CAForAndroid.FullScreen" parent="Theme.CAForAndroid">
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
+
+    <!-- 弹窗滑入动画 -->
+    <style name="DialogSlideAnim" parent="@android:style/Animation.Dialog">
+        <item name="android:windowEnterAnimation">@anim/slide_up</item>
+        <item name="android:windowExitAnimation">@anim/slide_down</item>
     </style>
 </resources>

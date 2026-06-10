@@ -11,6 +11,7 @@
         android:layout_height="match_parent"
         android:padding="8dp"
         android:clipToPadding="false"
+        android:layoutAnimation="@anim/list_item_animation"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <!-- 悬浮发布按钮（蓝紫渐变磨砂玻璃圆形） -->
