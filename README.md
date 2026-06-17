@@ -25,12 +25,16 @@
 ## ✨ 功能特性
 
 - 📢 **公告系统** - 浏览校园官方公告，支持回复互动
-- 💬 **动态发布** - 发布个人动态，支持匿名发布
+- 💬 **动态发布** - 发布个人动态，支持匿名发布和匿名回复
 - 🔧 **工具分享** - 分享实用工具，支持实时搜索
-- 👤 **个人中心** - 用户注册、登录、个人信息管理
+- 👤 **个人中心** - 用户注册、登录、头像上传、个人信息管理
 - 💭 **回复系统** - 帖子回复功能，显示回复计数
+- ⭐ **收藏功能** - 帖子收藏/取消收藏，收藏列表查看
+- 🔔 **消息通知** - 回复通知自动推送，支持已读/全部已读
+- 🌙 **夜间模式** - 日间/夜间主题一键切换
 - 🔍 **实时搜索** - 工具标签页支持关键词实时过滤
 - 🎨 **毛玻璃 UI** - 采用紫色渐变 + 毛玻璃/亚克力视觉风格
+- 📷 **图片上传** - 支持从相册选择图片附加到帖子
 - 🔐 **本地认证** - 基于 SharedPreferences 的登录状态持久化
 
 ## 🛠 技术栈
@@ -85,11 +89,22 @@ CAforAndroid/
 │       │   ├── LoginActivity.java      # 登录页面
 │       │   ├── RegisterActivity.java   # 注册页面
 │       │   ├── PostDetailActivity.java # 帖子详情页
+│       │   ├── FavoritesActivity.java  # 我的收藏
+│       │   ├── NotificationsActivity.java # 消息通知
+│       │   ├── AnnounceFragment.java   # 公告列表 (type=0)
+│       │   ├── DynamicFragment.java    # 动态列表 (type=1)
+│       │   ├── ToolsFragment.java      # 工具列表 (type=2)
+│       │   ├── ProfileFragment.java    # 个人中心
+│       │   ├── PublishPostDialog.java  # 发帖弹窗
+│       │   ├── LoginDialog.java        # 登录弹窗
+│       │   ├── ReplyDialog.java        # 回复弹窗
 │       │   ├── adapter/
 │       │   │   ├── PostAdapter.java    # 帖子列表适配器
-│       │   │   └── ReplyAdapter.java   # 回复列表适配器
+│       │   │   ├── PostDetailAdapter.java # 帖子详情多ViewType适配器
+│       │   │   ├── ReplyAdapter.java   # 回复列表适配器
+│       │   │   └── NotificationAdapter.java # 通知列表适配器
 │       │   ├── data/
-│       │   │   └── DatabaseHelper.java # SQLite 数据库帮助类
+│       │   │   └── DatabaseHelper.java # SQLite 数据库帮助类 (v3, 5张表)
 │       │   ├── model/
 │       │   │   ├── Post.java           # 帖子实体类
 │       │   │   └── Reply.java          # 回复实体类
@@ -98,12 +113,17 @@ CAforAndroid/
 │       │       └── BlurUtil.java       # 毛玻璃效果工具
 │       └── res/
 │           ├── drawable/               # 图形资源
-│           ├── layout/                 # 布局文件
+│           ├── layout/                 # 布局文件 (19个)
 │           ├── navigation/             # 导航图
+│           ├── anim/                   # 动画资源 (8个)
 │           └── values/                 # 资源值
 ├── build.gradle                        # 项目级构建配置
 ├── settings.gradle                     # 项目设置
-└── gradle.properties                   # Gradle 属性
+├── gradle.properties                   # Gradle 属性
+├── README.md                           # 项目说明文档
+└── docs/
+    ├── TECHNICAL_SPEC.md               # 技术说明书
+    └── PROJECT_INTRODUCTION.md         # 项目介绍文档
 ```
 
 ## 🚀 快速开始
@@ -189,7 +209,7 @@ CAforAndroid/
 ### 数据库信息
 
 - **数据库名**: `campus_announcement.db`
-- **版本**: 2
+- **版本**: 3
 
 ### 数据表
 
@@ -204,6 +224,8 @@ CAforAndroid/
 | time | INTEGER | 发布时间 (毫秒时间戳) |
 | author | TEXT | 作者用户名 |
 | anonymous | INTEGER | 是否匿名 (0=否, 1=是) |
+| reply_count | INTEGER | 回复计数 (默认 0) |
+| image_path | TEXT | 帖子附图本地路径 |
 
 #### users 表 (用户)
 
@@ -212,6 +234,7 @@ CAforAndroid/
 | id | INTEGER | 主键，自增 |
 | username | TEXT | 用户名 (唯一) |
 | password | TEXT | 密码 (明文存储) |
+| avatar_path | TEXT | 头像本地路径 |
 
 #### replies 表 (回复)
 
@@ -223,6 +246,30 @@ CAforAndroid/
 | time | INTEGER | 回复时间 (毫秒时间戳) |
 | author | TEXT | 回复者用户名 |
 | anonymous | INTEGER | 是否匿名 (0=否, 1=是) |
+
+#### favorites 表 (收藏)
+
+| 字段 | 类型 | 说明 |
+|------|------|------|
+| id | INTEGER | 主键，自增 |
+| user_id | TEXT | 收藏者用户名 |
+| post_id | INTEGER | 被收藏的帖子 ID |
+| time | INTEGER | 收藏时间 (毫秒时间戳) |
+
+> 约束: `UNIQUE(user_id, post_id)` 防止重复收藏
+
+#### notifications 表 (通知)
+
+| 字段 | 类型 | 说明 |
+|------|------|------|
+| id | INTEGER | 主键，自增 |
+| type | INTEGER | 通知类型 (0=回复通知) |
+| target_user | TEXT | 接收通知的用户名 |
+| source_user | TEXT | 触发通知的用户名 |
+| post_id | INTEGER | 关联的帖子 ID |
+| content | TEXT | 通知内容 (前30字符) |
+| is_read | INTEGER | 是否已读 (0=未读, 1=已读) |
+| time | INTEGER | 通知时间 (毫秒时间戳) |
 
 ## 🎨 UI 设计
 
@@ -251,6 +298,15 @@ CAforAndroid/
 | LoginActivity | 登录页 | 全屏登录界面 |
 | RegisterActivity | 注册页 | 全屏注册界面 |
 | PostDetailActivity | 帖子详情 | 帖子内容 + 回复列表 + 底部回复栏 |
+| FavoritesActivity | 我的收藏 | 收藏帖子列表，右滑进入动画 |
+| NotificationsActivity | 消息通知 | 通知列表，支持已读/全部已读 |
+
+## 📚 文档
+
+| 文档 | 说明 |
+|------|------|
+| [技术说明书](docs/TECHNICAL_SPEC.md) | 架构设计、数据库设计、模块设计、依赖清单、技术债务等 |
+| [项目介绍](docs/PROJECT_INTRODUCTION.md) | 功能展示、设计特色、交互流程、适用场景、未来展望 |
 
 ## 🔧 配置说明
 
@@ -295,6 +351,10 @@ CAforAndroid/
 - [x] 实现夜间模式
 - [x] 添加图片上传功能
 - [x] 优化 UI 动画效果
+- [ ] 实现网络同步功能
+- [ ] 密码哈希存储
+- [ ] 数据备份与恢复
+- [ ] 引入 ViewModel + LiveData (MVVM)
 
 ## 🐛 已知问题
 
